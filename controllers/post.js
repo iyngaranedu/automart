@@ -1,4 +1,5 @@
 const {validationResult} = require('express-validator');
+const {Post} = require('../models');
 
 exports.getPosts = (req, res, next) => {
     res.status(200).json({
@@ -10,7 +11,7 @@ exports.getPosts = (req, res, next) => {
     });
 }
 
-exports.storePost = (req, res, next) => {
+exports.storePost = async (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
         return res.status(422)
@@ -19,15 +20,22 @@ exports.storePost = (req, res, next) => {
                     errors: errors.array()
                 });
     }
-    const title = req.body.title;
-    const content = req.body.content;
 
-    res.status(201).json({
-        message: "Post created successfully",
-        post: {
-            id: new Date().toISOString(),
-            title: title,
-            content: content
-        }
-    });
+    try{
+        const post = await Post.create({
+            'title': req.body.title, 
+            'make': req.body.make,
+            'model': req.body.model,
+            'year': req.body.year,
+            'price': req.body.price,
+            'negotiable': req.body.negotiable
+        });
+    
+        res.status(201).json({
+            message: "Post created successfully",
+            post: post
+        });
+    } catch(ex) {
+        res.status(500).json(ex);
+    }
 }
