@@ -3,7 +3,8 @@ const express = require('express');
 
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
-const fileUploadRoutes = require('./routes/fileUpload');
+const uploadRoutes = require('./routes/upload');
+const authRoutes = require('./routes/auth');
 
 
 const app = express();
@@ -22,7 +23,8 @@ app.use((req, res, next) => {
 
 app.use('/posts', postRoutes);
 app.use('/users', userRoutes);
-app.use('/uploader', fileUploadRoutes);
+app.use('/uploader', uploadRoutes);
+app.use('/auth',authRoutes);
 
 app.listen(3000);
 
