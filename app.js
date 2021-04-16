@@ -3,6 +3,7 @@ const express = require('express');
 
 const postRoutes = require('./routes/post');
 const userRoutes = require('./routes/user');
+const fileUploadRoutes = require('./routes/fileUpload');
 
 
 const app = express();
@@ -19,9 +20,9 @@ app.use((req, res, next) => {
     next();
 });
 
-
 app.use('/posts', postRoutes);
 app.use('/users', userRoutes);
+app.use('/uploader', fileUploadRoutes);
 
 app.listen(3000);
 
