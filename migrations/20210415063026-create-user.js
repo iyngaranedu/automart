@@ -1,8 +1,7 @@
 'use strict';
-const { User } = require('../models/user');
 module.exports = {
   up: async (queryInterface, DataTypes) => {
-    await queryInterface.createTable('posts', {
+    await queryInterface.createTable('users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -13,36 +12,44 @@ module.exports = {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
       },
-      title: {
+      firstName: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      make: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      model: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      year: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-      },
-      price: {
-        type: DataTypes.DOUBLE,
-        allowNull: false,
-      },
-      negotiable: {
-        type: DataTypes.BOOLEAN,
-        allowNull: false,
-      },
-      defaultImage: {
+      lastName: {
         type: DataTypes.STRING
       },
-      userId: {
-        type: DataTypes.INTEGER,
-        allowNull: false
+      company: {
+        type: DataTypes.STRING
+      },
+      address: {
+        type: DataTypes.STRING
+      },
+      city: {
+        type: DataTypes.STRING
+      },
+      state: {
+        type: DataTypes.STRING
+      },
+      country: {
+        type: DataTypes.STRING
+      },
+      phoneNumber: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      email: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        unique: true,
+      },
+      password: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      isActive: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
       },
       createdAt: {
         allowNull: false,
@@ -53,8 +60,10 @@ module.exports = {
         type: DataTypes.DATE
       }
     });
+
+    await  queryInterface.addIndex('users', ['email']);
   },
-  down: async (queryInterface, DataTypes) => {
-    await queryInterface.dropTable('posts');
+  down: async (queryInterface, Sequelize) => {
+    await queryInterface.dropTable('users');
   }
 };

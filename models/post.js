@@ -5,12 +5,12 @@ const {
 module.exports = (sequelize, DataTypes) => {
   class Post extends Model {
     
-    static associate(models) {
-      // define association here
+    static associate({User}) {
+      this.belongsTo(User, {foreignKey: 'userId', as: 'user'});
     }
 
     toJSON() {
-      return {...this.get(), id: undefined};
+      return {...this.get(), id: undefined, userId: undefined};
     }
   };
   Post.init({

@@ -2,7 +2,8 @@ const express = require('express');
 
 
 const postRoutes = require('./routes/post');
-const sequelize = require('./util/database');
+const userRoutes = require('./routes/user');
+
 
 const app = express();
 
@@ -20,6 +21,7 @@ app.use((req, res, next) => {
 
 
 app.use('/posts', postRoutes);
+app.use('/users', userRoutes);
 
 app.listen(3000);
 
